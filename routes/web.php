@@ -104,7 +104,8 @@ Route::get('flim/{age}', function($age) {
 	// dung middleware
 	// next request
 	return redirect()->route('flim-1');
-})->middleware('check.age');
+})->middleware('check.age:user');
+// :admin (admin la gia tri) tham so truyen vao middleware
 
 Route::get('watch-all-flim', function() {
 	return "chuc ban xem vui ve";
@@ -121,4 +122,27 @@ Route::get('/check-number/{number}', function($number){
 Route::get('/not-a-number', function() {
 	return "khong phai la so chan";
 })->name('nan');
+
+/******* working with controller **********/
+Route::get('demo-controller','DemoController@index')->name('index');
+Route::get('test-controller','DemoController@test')->name('test');
+/*
+Route::get('exp','Example\TestController@index')->name('test.index');
+Route::get('exp-2','Example\ExpController@index')->name('exp.index');
+*/
+Route::group([
+	'namespace' => 'Example',
+	//'middleware' => 'check.login'
+], function(){
+	Route::get('exp/{user}','TestController@demoData')->name('test.index');
+	Route::get('exp-2','ExpController@index')->name('exp.index');
+	Route::get('exp-3/{id}/{age}/{money}/{address?}','ExpController@demo')->name('exp.demo');
+
+	Route::get('/user/login', 'ExpController@login')->name('user.login');
+	Route::post('/handle-login','ExpController@handleLogin')->name('user.login');
+});
+
+
+
+
 

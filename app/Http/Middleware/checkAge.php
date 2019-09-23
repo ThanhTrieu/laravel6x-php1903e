@@ -13,16 +13,32 @@ class checkAge
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle($request, Closure $next, $params = null)
     {
-        $myAge = $request->age;
-        $this->mycheckNumber($myAge);
         
-        if($myAge < 18){
+        // $params : bien de nhan gia tri truyen vao tu ben ngoai middleware
+        // xu ly logic thong qua tham so nay
+        
+        // before midlleware
+        $myAge = $request->age;  
+        //$this->mycheckNumber($myAge);
+        
+        if($myAge < 18 && $params !== 'admin'){
             return redirect()->route('flim-2');
         }
         // thuc thi tiep request routing
         return $next($request);
+    
+       
+        // after middleware
+        /*
+        $respone = $next($request);
+        $myAge = $request->age;
+        if($myAge < 18 && $params !== 'admin'){
+            return redirect()->route('flim-2');
+        }
+        return $respone;
+        */
     }
 
     private function mycheckNumber($n)
