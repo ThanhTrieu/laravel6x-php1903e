@@ -68,20 +68,21 @@ Route::get('watch-flim', function() {
 });
 
 // group routing
-// http://localhost:800/admin/home
-// http://localhost:800/admin/user
-// http://localhost:800/admin/product
+/******************** For Admin *************/
 Route::group([
 	'prefix' => 'admin',
-	'as' => 'admin.'
+	'as' => 'admin.',
+	'namespace' => 'Admin'
 ],function(){
-	Route::get('/home', function() {
-		return "Admin - home";
-	})->name('home');
-	Route::get('/user', function() {
-		return "Admin - user";
-	})->name('user');
+	Route::get('/login', 'LoginController@index')->name('login');
+	Route::get('/dashboard','DashboardController@index')->name('dashboard');
+	Route::get('/posts','PostsController@index')->name('posts');
+	Route::get('/categories','CategoriesController@index')->name('category');
+	Route::get('/tags','TagsController@index')->name('tag');
+	Route::get('/users','UsersController@index')->name('user');
 });
+
+/************** end admin ***************/
 
 Route::get('/home', function(){
 	return "Home";
