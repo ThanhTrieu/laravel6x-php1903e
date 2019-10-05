@@ -143,6 +143,15 @@ Route::group([
 	Route::post('/handle-login','ExpController@handleLogin')->name('user.login');
 });
 
+/*************** Test query databse ************************/
+Route::group([
+	'prefix' => 'db'
+], function(){
+	Route::get('/get', 'QueryDataBaseController@index')->name('queryGet');
+	Route::get('/orm', 'QueryDataBaseController@orm')->name('queryOrm');
+	Route::get('/test', 'QueryDataBaseController@test')->name('queryOrm');
+});
+
 
 
 
