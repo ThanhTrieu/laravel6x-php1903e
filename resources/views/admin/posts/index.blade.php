@@ -14,8 +14,7 @@
 </ol>
 <div class="row">
   <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-    <h2>This is posts - my name {{ $myName }} </h2>
-    <h2>This is posts - my age {{ $age }} </h2>
+    <a href="{{ route('admin.createPost') }}" class="btn btn-primary btn-sm">Create post</a>
   </div>
 </div>
 @endsection

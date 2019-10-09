@@ -75,10 +75,25 @@ Route::group([
 	'namespace' => 'Admin'
 ],function(){
 	Route::get('/login', 'LoginController@index')->name('login');
+	Route::post('/admin-login', 'LoginController@handleLogin')->name('handleLogin');
+	Route::post('/admin-logout','LoginController@logout')->name('hanleLogout');
+});
+
+Route::group([
+	'prefix' => 'admin',
+	'as' => 'admin.',
+	'namespace' => 'Admin',
+	'middleware' => ['web', 'check.admin.login']
+],function(){
 	Route::get('/dashboard','DashboardController@index')->name('dashboard');
+
 	Route::get('/posts','PostsController@index')->name('posts');
+	Route::get('/create-post', 'PostsController@createPost')->name('createPost');
+
 	Route::get('/categories','CategoriesController@index')->name('category');
+
 	Route::get('/tags','TagsController@index')->name('tag');
+
 	Route::get('/users','UsersController@index')->name('user');
 });
 

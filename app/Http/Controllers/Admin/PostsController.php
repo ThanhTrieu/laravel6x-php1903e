@@ -11,8 +11,7 @@ class PostsController extends Controller
     public function index()
     {
         $dataPost = DB::table('posts')->get();
-        dd($dataPost);
-
+  
     	// do du lieu tu controller ra view
     	$name = "LPHP1903E";
     	$data = [];
@@ -22,5 +21,10 @@ class PostsController extends Controller
 
     	//return view('admin.posts.index')->with('myName', $name);
     	return view('admin.posts.index', $data);
+    }
+
+    public function createPost()
+    {
+        return view('admin.posts.create');
     }
 }

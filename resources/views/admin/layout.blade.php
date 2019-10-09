@@ -19,7 +19,9 @@
 
   <!-- Custom styles for this template-->
   <link href="admin/css/sb-admin.css" rel="stylesheet">
-
+  
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet" />
+  @stack('stylesheets')
 </head>
 
 <body id="page-top">
@@ -66,8 +68,11 @@
         </div>
         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
         <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
+          <form action="{{ route('admin.hanleLogout') }}" method="post">
+            @csrf
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+            <button class="btn btn-primary" type="submit">Logout</button>
+          </form>
         </div>
       </div>
     </div>
@@ -80,17 +85,11 @@
   <!-- Core plugin JavaScript-->
   <script src="admin/vendor/jquery-easing/jquery.easing.min.js"></script>
 
-  <!-- Page level plugin JavaScript-->
-{{--   <script src="vendor/chart.js/Chart.min.js"></script>
-  <script src="vendor/datatables/jquery.dataTables.js"></script>
-  <script src="vendor/datatables/dataTables.bootstrap4.js"></script> --}}
-
   <!-- Custom scripts for all pages-->
   <script src="admin/js/sb-admin.min.js"></script>
-
-  <!-- Demo scripts for this page-->
-  {{-- <script src="js/demo/datatables-demo.js"></script>
-  <script src="js/demo/chart-area-demo.js"></script> --}}
+  <script src="https://cdn.ckeditor.com/4.12.1/standard/ckeditor.js" type="text/javascript"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
+  @stack('scripts')
 
 </body>
 

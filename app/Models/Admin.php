@@ -10,6 +10,18 @@ class Admin extends Model
     // quy uoc lam viec voi table admins
     protected $table = 'admins'; 
 
+    public function checkAdminLogin($user, $pass)
+    {
+        $data = [];
+        $info = Admin::select('*')
+                    ->where(['email' => $user, 'password' => $pass, 'status' => 1])
+                    ->first();
+        if($info){
+            $data = $info->toArray();
+        }
+        return $data;
+    }
+
     public function getAllDataAdmin()
     {
     	$newData = [];
