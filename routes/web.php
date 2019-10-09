@@ -89,6 +89,7 @@ Route::group([
 
 	Route::get('/posts','PostsController@index')->name('posts');
 	Route::get('/create-post', 'PostsController@createPost')->name('createPost');
+	Route::post('handle-create-post', 'PostsController@handleCreatePost')->name('handlCreatePost');
 
 	Route::get('/categories','CategoriesController@index')->name('category');
 

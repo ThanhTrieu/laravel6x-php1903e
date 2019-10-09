@@ -17,4 +17,14 @@ class Tag extends Model
     {
     	return $this->belongsToMany('App\Models\Post');
     }
+
+    public function getAllDataTags()
+    {
+    	$data = [];
+    	$tags = Tag::all();
+    	if($tags){
+    		$data = $tags->toArray();
+    	}
+    	return $data;
+    }
 }

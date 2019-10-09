@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use App\Models\Category;
+use App\Models\Tag;
+use App\Http\Requests\StoreBlogPost;
 
 class PostsController extends Controller
 {
@@ -23,8 +26,16 @@ class PostsController extends Controller
     	return view('admin.posts.index', $data);
     }
 
-    public function createPost()
+    public function createPost(Category $cate, Tag $tag)
     {
-        return view('admin.posts.create');
+        $data = [];
+        $data['cates'] = $cate->getAllDataCategories();
+        $data['tags'] = $tag->getAllDataTags();
+        return view('admin.posts.create', $data );
+    }
+
+    public function handleCreatePost(StoreBlogPost $request)
+    {
+        dd($request->all());
     }
 }

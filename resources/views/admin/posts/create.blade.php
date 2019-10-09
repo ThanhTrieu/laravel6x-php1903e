@@ -4,13 +4,16 @@
 @section('title','This is create posts')
 @push('stylesheets')
 	<link href="{{ asset('admin/css/jquery.datetimepicker.min.css') }}" rel="stylesheet">
+
 	<link href="{{ asset('admin/css/multiple-select.min.css') }}" rel="stylesheet">
 @endpush
 
 @push('scripts')
 	<script type="text/javascript" src="{{ asset('admin/js/posts.js') }}"></script>
 	<script type="text/javascript" src="{{ asset('admin/js/jquery.datetimepicker.js') }}"></script>
+
 	<script type="text/javascript" src="{{ asset('admin/js/multiple-select.min.js') }}"></script>
+
 	<script type="text/javascript">
 		$(function () {
 			$('#publishDate').datetimepicker({
@@ -35,7 +38,18 @@
 	</div>
 </div>
 <hr>
-<form action="" method="post">
+
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+<form action="{{ route('admin.handlCreatePost') }}" method="post" enctype="multipart/form-data">
 	@csrf
 	<div class="row">
 		  <div class="col-12 col-sm-12 col-md-6 col-lg-6">
@@ -64,8 +78,9 @@
 		    	<label for="catePost">Categories (*)</label>
 		    	<select class="form-control" id="catePost" name="catePost">
 		    		<option value="">-- choose --</option>
-		    		<option value="1">PHP</option>
-		    		<option value="2">Java</option>
+		    		@foreach($cates as $key => $item)
+		    			<option value="{{ $item['id'] }}">{{ $item['name_cate'] }}</option>
+					@endforeach
 		    	</select>
 		    </div>
 		    <div class="form-group">
@@ -76,15 +91,13 @@
 		    <div class="form-group">
 		    	<label for="tagsPost"> Tags (*)</label>
 		    	<select class="form-control js-multi-tag" id="tagsPost" name="tagsPost[]" multiple="multiple">
-		    		<option value="1">PHP</option>
-		    		<option value="1">PHP</option>
-		    		<option value="1">PHP</option>
-		    		<option value="1">PHP</option>
-		    		<option value="1">PHP</option>
+					@foreach($tags as $key => $item)
+						<option value="{{ $item['id'] }}">{{ $item['name_tag'] }}</option>
+					@endforeach
 		    	</select>
 		    </div>
-		    <button class="btn btn-primary">publish post</button>
-		    <button class="btn btn-secondary">save post</button>
+		    <button class="btn btn-primary" type="submit">publish post</button>
+		    <button class="btn btn-secondary" type="reset  ">cancel</button>
 		</div>
 	</div>
 	<div class="row">
