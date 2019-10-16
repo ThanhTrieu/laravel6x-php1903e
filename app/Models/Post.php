@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Post extends Model
 {
@@ -27,5 +28,13 @@ class Post extends Model
     public function post_contents()
     {
         return $this->hasOne('App\Models\PostContent');
+    }
+
+    public function insertDataPost($data)
+    {
+        DB::table('posts')->insert($data);
+        // lay ra id vua insert
+        $id = DB::getPdo()->lastInsertId();
+        return $id;
     }
 }

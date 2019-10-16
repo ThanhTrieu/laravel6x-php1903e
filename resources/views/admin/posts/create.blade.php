@@ -49,6 +49,18 @@
     </div>
 @endif
 
+@if($errorPublisDate)
+	<div class="alert alert-danger">
+		<span>{{ $errorPublisDate }}</span>
+	</div>
+@endif
+
+@if($errorAvatar)
+	<div class="alert alert-danger">
+		<span>{{ $errorAvatar }}</span>
+	</div>
+@endif
+
 <form action="{{ route('admin.handlCreatePost') }}" method="post" enctype="multipart/form-data">
 	@csrf
 	<div class="row">
