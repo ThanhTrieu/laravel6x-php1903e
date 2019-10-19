@@ -90,6 +90,9 @@ Route::group([
 	Route::get('/posts','PostsController@index')->name('posts');
 	Route::get('/create-post', 'PostsController@createPost')->name('createPost');
 	Route::post('handle-create-post', 'PostsController@handleCreatePost')->name('handlCreatePost');
+	Route::post('delete-post', 'PostsController@deletePost')->name('deletePost');
+	Route::get('{slug}~{id}', 'PostsController@edit')->name('editPost');
+	Route::post('update-post/{id}', 'PostsController@hanleUpdate')->name('handleUpdatePost');
 
 	Route::get('/categories','CategoriesController@index')->name('category');
 

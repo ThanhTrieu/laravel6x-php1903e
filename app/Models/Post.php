@@ -37,4 +37,34 @@ class Post extends Model
         $id = DB::getPdo()->lastInsertId();
         return $id;
     }
+
+    public function getAllDataPosts()
+    {
+        $data = DB::table('posts AS p')
+                        ->select('p.*','c.name_cate','a.fullname')
+                        ->join('categories AS c','p.categories_id', '=', 'c.id')
+                        ->join('admins AS a', 'p.admins_id', '=', 'a.id')
+                        ->get();
+
+        return $data;
+    }
+
+    public function deletePostById($id)
+    {
+        $del = DB::table('posts')
+                    ->where('id', $id)
+                    ->delete();
+        return $del;
+    }
+
+    public function getInfoDatPostById($id)
+    {
+        $data = DB::table('posts AS p')
+                ->select('p.*', 'pc.content_web')
+                ->join('post_contents AS pc', 'pc.posts_id', '=', 'p.id')
+                ->where('p.id', $id)
+                ->first();
+        $data = json_decode(json_encode($data),true);
+        return $data;
+    }
 }

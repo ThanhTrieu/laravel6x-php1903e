@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Tag extends Model
 {
@@ -26,5 +27,16 @@ class Tag extends Model
     		$data = $tags->toArray();
     	}
     	return $data;
+    }
+
+    public function getDataTagByPost()
+    {
+        $data = DB::table('tags AS t')
+                ->select('t.*', 'pt.posts_id AS post_id')
+                ->join('post_tag AS pt', 't.id', '=', 'pt.tags_id')
+                ->get();
+        $data = json_decode(json_encode($data),true);
+
+        return $data;
     }
 }

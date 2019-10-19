@@ -14,9 +14,9 @@ use Illuminate\Support\Str;
 
 class PostsController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request, Post $post, Tag $tag)
     {
-        $dataPost = DB::table('posts')->get();
+        //$dataPost = DB::table('posts')->get();
   
     	// do du lieu tu controller ra view
     	$name = "LPHP1903E";
@@ -25,8 +25,21 @@ class PostsController extends Controller
     	$data['age'] = 20;
     	$data['address'] = 'Ha Noi';
         $data['createPostSuccess'] = $request->session()->get('createPostSuccess');
+        $lstPosts = $post->getAllDataPosts();
+        $lstPosts = json_decode(json_encode($lstPosts),true);
+        $lstTags = $tag->getDataTagByPost();
 
-    	//return view('admin.posts.index')->with('myName', $name);
+        // gan tags vao bai viet
+        foreach($lstPosts as $key => $val){
+            $lstPosts[$key]['lstTags'] = [];
+            foreach($lstTags as $k => $item){
+                if($val['id'] == $item['post_id']){
+                    $lstPosts[$key]['lstTags'][] = $item['name_tag'];
+                }
+            }
+        }
+        $data['lstPosts'] = $lstPosts;
+
     	return view('admin.posts.index', $data);
     }
 
@@ -155,6 +168,50 @@ class PostsController extends Controller
             $request->session()->flash('errorCreate', 'Tao bai viet bi loi, vui long kiem tra lai');
             // quay lai form tao bai viet
             return redirect()->route('admin.createPost');
+        }
+    }
+
+    public function deletePost(Request $request, Post $post)
+    {
+        $id = $request->id;
+        $id = is_numeric($id) ? $id : 0;
+        if($id > 0){
+            $del = $post->deletePostById($id);
+            if($del){
+                echo "ok";
+            } else {
+                echo "fail";
+            }
+        } else {
+            echo "err";
+        }
+    }
+
+    public function edit($slug, $id, Post $post, Category $cate, Tag $tag)
+    {
+        $id = is_numeric($id) ? $id : 0;
+        $infoPost = $post->getInfoDatPostById($id);
+
+        if($infoPost){
+            $data = [];
+            $data['cates'] = $cate->getAllDataCategories();
+            $data['tags']  = $tag->getAllDataTags();
+
+            // lay ra tat ca tag id thuoc bai viet nay
+            $lstTags = $tag->getDataTagByPost();
+            $arrIdTag = [];
+            foreach($lstTags as $key => $item){
+                if($item['post_id'] == $id){
+                    $arrIdTag[] = $item['id'];
+                }
+            }
+
+            $data['arrIdTag'] = $arrIdTag;
+            $data['info']  = $infoPost;
+
+            return view('admin.posts.edit', $data);
+        } else {
+            abort(404);
         }
     }
 }
