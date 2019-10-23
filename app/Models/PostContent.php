@@ -22,4 +22,12 @@ class PostContent extends Model
     	}
     	return false;
     }
+
+    public function updateDataContentPostById($data, $id)
+    {
+        $up = DB::table('post_contents')
+                ->where('posts_id', $id)
+                ->update($data);
+        return $up;
+    }
 }

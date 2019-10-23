@@ -39,6 +39,16 @@
 </div>
 <hr>
 
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
 
 <form action="{{ route('admin.handleUpdatePost',['id'=>$info['id']]) }}" method="post" enctype="multipart/form-data">
 	@csrf
@@ -89,6 +99,15 @@
 					@endforeach
 		    	</select>
 		    </div>
+		    {{-- chon status bai viet --}}
+		    <div class="form-group">
+		    	<label for="statusPost"> Status (*)</label>
+		    	<select class="form-control" id="statusPost" name="statusPost">
+		    		<option value="0" {{ $info['status'] == 0 ? 'selected=selected' : '' }} >Deactive</option>
+		    		<option value="1" {{ $info['status'] == 1 ? 'selected=selected' : '' }}>Active</option>
+		    	</select>  
+		    </div>
+
 		    <button class="btn btn-primary" type="submit">Update post</button>
 		    <button class="btn btn-secondary" type="reset  ">cancel</button>
 		</div>

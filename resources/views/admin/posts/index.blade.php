@@ -19,7 +19,22 @@
 		</div>
 	@endif
   <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-    <a href="{{ route('admin.createPost') }}" class="btn btn-primary btn-lg">Create post</a>
+
+    <div class="row">
+      <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+        <a href="{{ route('admin.createPost') }}" class="btn btn-primary">Create post</a>
+        <a href="{{ route('admin.posts') }}" class="btn btn-primary">view All</a>
+      </div>
+      <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" id="js-keyword" value="{{ $keyword }}">
+          <div class="input-group-append">
+            <span class="input-group-text" id="js-search">Search</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  
 
     <table class="table table-bordered table-striped table-hover my-3">
       <thead>
@@ -75,6 +90,8 @@
         @endforeach
       </tbody>
     </table>
+
+    {{ $paginate->appends(request()->query())->links() }}
   </div>
 </div>
 @endsection
@@ -103,6 +120,13 @@
               }
             }
           });
+        }
+      });
+
+      $('#js-search').click(function() {
+        var keyword = $('#js-keyword').val().trim();
+        if(keyword.length > 0){
+          window.location.href = "{{ route('admin.posts') }}" + "?keyword="+keyword;
         }
       });
     });

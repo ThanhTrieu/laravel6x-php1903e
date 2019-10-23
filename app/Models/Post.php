@@ -38,13 +38,15 @@ class Post extends Model
         return $id;
     }
 
-    public function getAllDataPosts()
+    public function getAllDataPosts($keyword = '')
     {
         $data = DB::table('posts AS p')
                         ->select('p.*','c.name_cate','a.fullname')
                         ->join('categories AS c','p.categories_id', '=', 'c.id')
                         ->join('admins AS a', 'p.admins_id', '=', 'a.id')
-                        ->get();
+                        ->where('p.title', 'like', '%'.$keyword.'%')
+                        ->orWhere('p.sapo', 'like', '%'.$keyword.'%')
+                        ->paginate(5); // 5 bai viet tren mot trang
 
         return $data;
     }
@@ -67,4 +69,31 @@ class Post extends Model
         $data = json_decode(json_encode($data),true);
         return $data;
     }
+
+    public function updateDataPostById($data, $id)
+    {
+        $up = DB::table('posts')
+                ->where('id', $id)
+                ->update($data);
+                
+        return $up;
+    }
+
+
+    /*********** For frontend ***********/
+    public function getListPostsByPublishDate()
+    {
+        $today = date('Y-m-d H:i:s');
+        $data = DB::table('posts AS p')
+            ->select('p.*', 'c.name_cate', 'c.parent_id', 'a.fullname')
+            ->join('categories AS c', 'c.id', '=', 'p.categories_id')
+            ->join('admins AS a', 'a.id', '=', 'p.admins_id')
+            ->where('p.publish_date', '<=', $today)
+            ->where('p.status', 1)
+            ->orderBy('p.publish_date', 'DESC')
+            ->paginate(11);
+
+        return $data;
+    }
+
 }
