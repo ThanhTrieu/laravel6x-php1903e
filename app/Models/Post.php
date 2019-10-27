@@ -96,4 +96,18 @@ class Post extends Model
         return $data;
     }
 
+    // lay ra 3 bai viet co luot xem cao nhat
+    public function popularPost()
+    {
+        $today = date('Y-m-d H:i:s');
+        $data = DB::table('posts AS p')
+            ->select('p.*')
+            ->where('p.publish_date', '<=', $today)
+            ->where('p.status', 1)
+            ->orderBy('p.count_view', 'DESC')
+            ->limit(3)
+            ->get();
+        return $data;
+    }
+
 }
