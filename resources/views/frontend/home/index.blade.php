@@ -9,7 +9,7 @@
             <div class="owl-carousel owl-theme home-slider">
             @foreach($slider as $key => $item)
               <div>
-                <a href="#" 
+                <a href="{{ route('fr.detailBlog',['slug' => $item['slug']]) }}" 
                   class="a-block d-flex align-items-center height-lg" 
                   style="background-image: url('{{ URL::to('/') }}/upload/images/{{ $item['avatar'] }}');"
                 >
@@ -50,7 +50,7 @@
       <div class="row">
         @foreach($lastest as $key => $item)
           <div class="col-md-6">
-            <a href="#l" class="blog-entry element-animate" data-animate-effect="fadeIn">
+            <a href="{{ route('fr.detailBlog',['slug' => $item['slug']]) }}" class="blog-entry element-animate" data-animate-effect="fadeIn">
               <img src="{{ URL::to('/') }}/upload/images/{{ $item['avatar'] }}" alt="Image placeholder">
               <div class="blog-content-body">
                 <div class="post-meta">

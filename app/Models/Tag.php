@@ -39,4 +39,16 @@ class Tag extends Model
 
         return $data;
     }
+
+    public function getDataTagByIdPost($id)
+    {
+        $data = DB::table('tags AS t')
+                ->select('t.*', 'pt.posts_id AS post_id')
+                ->join('post_tag AS pt', 't.id', '=', 'pt.tags_id')
+                ->where('pt.posts_id', $id)
+                ->get();
+                
+        $data = json_decode(json_encode($data),true);
+        return $data;
+    }
 }

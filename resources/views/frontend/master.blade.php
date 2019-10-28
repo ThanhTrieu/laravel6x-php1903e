@@ -5,6 +5,7 @@
     <title>@yield('title')</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300, 400,700|Inconsolata:400,700" rel="stylesheet">
 
@@ -18,9 +19,12 @@
 
     <!-- Theme Style -->
     <link rel="stylesheet" href="frontend/css/style.css">
+
+    @stack('stylesheets')
   </head>
   <body>
-    
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v4.0&appId=1872442989723952&autoLogAppEvents=1"></script>
 
     <div class="wrap">
 
@@ -48,6 +52,8 @@
           </div>
         </div>
       </section>
+
+      @yield('related-post')
     
       @include('frontend.partials.footer')
       <!-- END footer -->
@@ -64,7 +70,18 @@
     <script src="frontend/js/owl.carousel.min.js"></script>
     <script src="frontend/js/jquery.waypoints.min.js"></script>
     <script src="frontend/js/jquery.stellar.min.js"></script>
-    
     <script src="frontend/js/main.js"></script>
+    
+    <script type="text/javascript">
+      $(function(){
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+      });
+    </script>
+
+    @stack('scripts')
   </body>
 </html>

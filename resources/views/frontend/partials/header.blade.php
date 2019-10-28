@@ -35,14 +35,15 @@
           @foreach($view['treeCate'] as $key => $cate)
             @if(empty($cate['subCate']))
               <li class="nav-item">
+                {{-- ko phai la link sang list cate --}}
                 <a class="nav-link active" href="#">{{ $cate['name_cate'] }}</a>
               </li>
             @else
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="category.html" id="dropdown-{{ $cate['id'] }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ $cate['name_cate'] }}</a>
+                <a class="nav-link dropdown-toggle" id="dropdown-{{ $cate['id'] }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ $cate['name_cate'] }}</a>
                 <div class="dropdown-menu" aria-labelledby="dropdown-{{ $cate['id'] }}">
                   @foreach($cate['subCate'] as $k => $item)
-                    <a class="dropdown-item" href="#">{{ $item['name_cate'] }}</a>
+                    <a class="dropdown-item" href="{{ route('fr.categories',['slug' => Str::slug($item['name_cate'],'-'), 'id' => $item['id']]) }}">{{ $item['name_cate'] }}</a>
                   @endforeach
                 </div>
               </li>

@@ -110,4 +110,45 @@ class Post extends Model
         return $data;
     }
 
+    public function getDataPostBySlug($slug)
+    {
+        $today = date('Y-m-d H:i:s');
+        $data = DB::table('posts AS p')
+                ->select('p.*','pc.content_web','c.name_cate','a.fullname')
+                ->join('post_contents AS pc', 'pc.posts_id','=','p.id')
+                ->join('categories AS c', 'c.id', '=', 'p.categories_id')
+                ->join('admins AS a', 'a.id', '=', 'p.admins_id')
+                ->where('p.publish_date', '<=', $today)
+                ->where('p.status', 1)
+                ->where('p.slug', $slug)
+                ->first();
+        return $data; 
+    }
+
+    public function getDataPostByCateId($cateId, $postId)
+    {
+        $today = date('Y-m-d H:i:s');
+        $data = DB::table('posts AS p')
+                ->select('p.*','c.name_cate','a.fullname')
+                ->join('categories AS c', 'c.id', '=', 'p.categories_id')
+                ->join('admins AS a', 'a.id', '=', 'p.admins_id')
+                ->where('p.publish_date', '<=', $today)
+                ->where('p.status', 1)
+                ->where('p.categories_id', $cateId)
+                ->where('p.id','<>', $postId)
+                ->limit(3)
+                ->get();
+
+        $data = json_decode(json_encode($data),true);
+        return $data;
+    }
+
+    public function updateView($id, $view)
+    {
+        $count = $view + 1;
+        $up = DB::table('posts AS p')
+                ->where('p.id', $id)
+                ->update(['p.count_view' => $count]);
+        return $up;
+    }
 }

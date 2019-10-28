@@ -17,6 +17,9 @@ Route::group([
 	'as' => 'fr.'
 ],function(){
 	Route::get('/','HomeController@index')->name('home');
+	Route::get('{slug}', 'DetailBlogController@index')->name('detailBlog');
+	Route::post('/update-count-view','DetailBlogController@updateCountView')->name('updateCountView');
+	Route::get('/category/{slug}~{id}', 'CategoryController@listCate')->name('categories');
 });
 
 

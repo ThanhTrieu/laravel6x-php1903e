@@ -1,11 +1,11 @@
 <!-- END sidebar-box -->  
 <div class="sidebar-box">
-  <h3 class="heading">Popular Posts</h3>
+  <h3 class="heading mt-3">Popular Posts</h3>
   <div class="post-entry-sidebar">
     <ul>
       @foreach($view['popularPost'] as $key => $item)
       <li>
-        <a href="#">
+        <a href="{{ route('fr.detailBlog',['slug' => $item['slug']]) }}">
           <img src="{{ URL::to('/') }}/upload/images/{{ $item['avatar'] }}" alt="Image placeholder" class="mr-4">
           <div class="text">
             <h4>{{ $item['title'] }}</h4>

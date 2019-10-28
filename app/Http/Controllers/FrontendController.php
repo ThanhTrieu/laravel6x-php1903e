@@ -29,12 +29,17 @@ class FrontendController extends Controller
     		$dataCatePost[$val['id']]['list_post'][$val['post_id']] = $val['post_id'];
     	}
 
+        // lay tags co bai viet
+        $lstTags = $tag->getDataTagByPost();
+
+
     	// share du lieu cho tat cac cac view
 		 View::share('view', [
 		 	'treeCate' => $treeCate,
 		 	'listCate' => $listCate,
 		 	'popularPost' => $popularPost,
-		 	'catePost' => $dataCatePost
+		 	'catePost' => $dataCatePost,
+            'lstTags' => $lstTags
 		 ]);
     }
 }
