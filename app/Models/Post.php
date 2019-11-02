@@ -151,4 +151,23 @@ class Post extends Model
                 ->update(['p.count_view' => $count]);
         return $up;
     }
+
+    public function searchDataPostByKeyword($keyword = '')
+    {
+        $today = date('Y-m-d H:i:s');
+        $data = DB::table('posts AS p')
+                ->select('p.*', 'c.name_cate', 'a.fullname')
+                ->join('categories AS c', 'c.id', '=', 'p.categories_id')
+                ->join('admins AS a', 'a.id', '=', 'p.admins_id')
+                ->where(function($query) use ($keyword) {
+                    $query->where('p.title', 'LIKE', '%'.$keyword.'%')
+                          ->orWhere('p.sapo', 'LIKE', '%'.$keyword.'%')
+                          ->orWhere('p.slug', 'LIKE', '%'.$keyword.'%');
+                })
+                ->where('p.publish_date','<=', $today)
+                ->where('p.status', 1)
+                ->orderBy('p.publish_date', 'DESC')
+                ->paginate(8);
+        return $data;
+    }
 }

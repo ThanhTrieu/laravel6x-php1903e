@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\View;
 
 class FrontendController extends Controller
 {
-    public function __construct(Category $cate, Post $post, Tag $tag)
+    public function __construct(Category $cate, Post $post, Tag $tag, Request $request)
     {
     	$listCate = $cate->getAllDataCategories();
     	$treeCate = Categories::buildTreeCategory($listCate);
@@ -31,7 +31,8 @@ class FrontendController extends Controller
 
         // lay tags co bai viet
         $lstTags = $tag->getDataTagByPost();
-
+        $keyword = $request->s;
+        $keyword = trim($keyword);
 
     	// share du lieu cho tat cac cac view
 		 View::share('view', [
@@ -39,7 +40,8 @@ class FrontendController extends Controller
 		 	'listCate' => $listCate,
 		 	'popularPost' => $popularPost,
 		 	'catePost' => $dataCatePost,
-            'lstTags' => $lstTags
+            'lstTags' => $lstTags,
+            'keyword' => $keyword
 		 ]);
     }
 }

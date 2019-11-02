@@ -57,4 +57,13 @@ class Admin extends Model
     	$data = DB::table('posts')->get();
     	return $data;
     }
+
+    public static function deleteDataById($id)
+    {
+        $del = DB::table('admins')
+            ->where('id', $id)
+            ->delete();
+            
+        return $del;
+    } 
 }

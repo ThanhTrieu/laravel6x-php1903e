@@ -10,14 +10,22 @@
         </div>
         <div class="col-3 search-top">
           <!-- <a href="#"><span class="fa fa-search"></span></a> -->
-          <form action="#" class="search-top-form">
-            <span class="icon fa fa-search"></span>
-            <input type="text" id="s" placeholder="Type keyword to search...">
+          {{-- <form action="{{ route('fr.searchBlog') }}" class="search-top-form" method="get">
+            <button type="submit" class="icon fa fa-search btn btn-primary"></button>
+            <input name="s" type="text" id="s" placeholder="Type keyword to search..." value="{{ $view['keyword'] }}">
+          </form> --}}
+
+          <form class="search-top-form form-inline">
+            <input name="s" type="text" id="s" placeholder="Type keyword to search...">
+            <img id="js-loading" src="/frontend/images/loading-32.gif" alt="" style="display: none;">
           </form>
+
         </div>
       </div>
     </div>
   </div>
+
+  <div class="container" id="js-search" style="display: none;"></div>
 
   <div class="container logo-wrap">
     <div class="row pt-5">
@@ -55,3 +63,40 @@
   </nav>
 </header>
 <!-- END header -->
+@push('scripts')
+  <script type="text/javascript">
+    $(function(){
+      $('#s').keyup(function() {
+        var self = $(this);
+        var timeout;
+
+        clearTimeout(timeout);
+
+        timeout = setTimeout(function(){
+          var keyword = self.val().trim();
+          if(keyword.length > 0){
+            $.ajax({
+              url: "{{ route('fr.ajaxSearch') }}",
+              type: "GET",
+              data: {key : keyword},
+              //dataType: "html",
+              beforeSend: function(){
+                $('#js-loading').show();
+                $('#js-search').hide();
+              },
+              success: function(data){
+                $('#js-loading').hide();
+                $('#js-search').html(data);
+                $('#js-search').show();
+              }
+            });
+          }
+        }, 1000);
+      });
+    })
+  </script>
+@endpush
+
+
+
+

@@ -16,3 +16,11 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::group([
+	'namespace' => 'Service'
+],function(){
+	Route::apiResource('users', 'DemoController');
+	Route::apiResource('create-user', 'DemoController');
+});
+
