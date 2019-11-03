@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row mb-5">
       <div class="col-md-4">
-        <h3>About Us</h3>
+        <h3>@lang('common.about')</h3>
         <p class="mb-4">
           <img src="images/img_1.jpg" alt="Image placeholder" class="img-fluid">
         </p>
@@ -13,7 +13,7 @@
         <div class="row">
           <div class="col-md-6">
             <div class="mb-5">
-              <h3>Quick Links</h3>
+              <h3>@lang('common.quick-link')</h3>
               <ul class="list-unstyled">
                 <li><a href="#">About Us</a></li>
                 <li><a href="#">Travel</a></li>
@@ -25,7 +25,7 @@
           </div>
           <div class="col-md-6">
             <div class="mb-5">
-              <h3>Social</h3>
+              <h3>@lang('common.social')</h3>
               <ul class="list-unstyled footer-social">
                 <li><a href="#"><span class="fa fa-twitter"></span> Twitter</a></li>
                 <li><a href="#"><span class="fa fa-facebook"></span> Facebook</a></li>

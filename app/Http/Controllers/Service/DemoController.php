@@ -5,9 +5,12 @@ namespace App\Http\Controllers\Service;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
+use \Firebase\JWT\JWT;
 
 class DemoController extends Controller
 {
+    const API_KEY = 'lphp1903e';
+
     /**
      * Display a listing of the resource.
      *
@@ -77,17 +80,26 @@ class DemoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
+      $token = $request->header('Authorization');
+      // giai ma
+      $decode = JWT::decode($token, self::API_KEY, array('HS256'));
+      if($decode){
         $del = Admin::deleteDataById($id); 
         if($del){
-            return response()->json([
-                'mess' => 'successful'
-            ]);
+          return response()->json([
+            'mess' => 'successful'
+          ]);
         } else {
-            return response()->json([
-                'mess' => 'fail'
-            ]);
+          return response()->json([
+            'mess' => 'fail'
+          ]);
         }
+      } else {
+        return response()->json([
+          'mess' => 'token invalid'
+        ]);
+      }  
     }
 }

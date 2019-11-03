@@ -7,6 +7,9 @@
           <a href="#"><span class="fa fa-facebook"></span></a>
           <a href="#"><span class="fa fa-instagram"></span></a>
           <a href="#"><span class="fa fa-youtube-play"></span></a>
+          {{-- languae --}}
+          <a href="{{ route('switchLanguage', ['lang' => 'vi']) }}">Vietnamese</a>
+          <a href="{{ route('switchLanguage', ['lang' => 'en']) }}">English</a>
         </div>
         <div class="col-3 search-top">
           <!-- <a href="#"><span class="fa fa-search"></span></a> -->

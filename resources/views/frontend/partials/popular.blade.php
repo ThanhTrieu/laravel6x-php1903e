@@ -1,6 +1,6 @@
 <!-- END sidebar-box -->  
 <div class="sidebar-box">
-  <h3 class="heading mt-3">Popular Posts</h3>
+  <h3 class="heading mt-3">@lang('common.popular-posts')</h3>
   <div class="post-entry-sidebar">
     <ul>
       @foreach($view['popularPost'] as $key => $item)
